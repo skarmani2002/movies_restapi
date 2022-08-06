@@ -1,0 +1,42 @@
+{
+  "name": "movies_api",
+  "version": "1.0.0",
+  "description": "nodejs_api for movies API development using node js and mysql db Rest API -  Node.js Rest API using MVC architecture express node.js.",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node ./bin/restapi",
+    "start": "node ./bin/restapi",
+    "dev": "set DEBUG=ss:* && nodemon ./bin/restapi",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skarmani2002/movies_restapi.git"
+  },
+  "keywords": [
+    "Rest",
+    "API",
+    "Movies",
+    "Rest",
+    "API"
+  ],
+  "author": "Suresh Kumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skarmani2002/movies_restapi/issues"
+  },
+  "homepage": "https://github.com/skarmani2002/movies_restapi#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-flash": "0.0.2",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.14.2",
+    "http": "0.0.1-security",
+    "knex": "^0.21.21",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.19",
+    "path": "^0.12.7"
+  }
+}
