@@ -23,14 +23,14 @@ module.exports = (req, res, next, validations) => {
             let valid = Joi.validate(data, validation_rules);
             if (valid.error) {
                 console.log('Validation Error in %s : ', req.path, rule);
-                return next(errors.validationError(valid.error.details));
+                return errors.validationError(valid.error.details);
             } else {
                 return next();
             }
         } else {
             if (i === (rules.length - 1)) {
                 console.log('Validation Rule not found in %s : ', req.path);
-                return next(errors.getError('ESS50304'));
+                return errors.getError('ESS50304');
             }
         }
     }

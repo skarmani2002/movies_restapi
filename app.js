@@ -8,6 +8,7 @@ const exphbs = require('express-handlebars');
 const { engine } = require('express-handlebars');
 const paginate = require('handlebars-paginate');
 const  Handlebars = require('handlebars');
+const session = require('express-session');
 
 
 global.errors = require('./errors/response-errors');
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.engine('.hbs', engine({extname: '.hbs',defaultLayout: "main",partialsDir: __dirname + '/views/partials/'}));
 app.set('view engine', '.hbs');
 app.set('views', './views');
+app.use(session({secret: 'suresh', saveUninitialized: false, resave: false}));
 
 
 
@@ -58,6 +60,7 @@ fs.readdirSync('./routes').forEach((file) => {
 
 //catch any other expection or error response
 app.use((err, req, res, next) => {
+    
     res.status(err.status || 500);
     const errorStructure = {
         status: err.status || 500,

@@ -6,7 +6,7 @@ const validations = {
         name            :  Joi.required(),
         photo           :  Joi.required(),
         description     :  Joi.required(),
-        points          :  Joi.optional(),
+        points          :  Joi.required(),
     }),
   
 };

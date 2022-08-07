@@ -6,6 +6,18 @@
 const ModelFilms        = require('../models/ModelFilms');
 const ModelFilmGenre    = require('../models/ModelFilmGenre');
 const ModelGenre        = require('../models/ModelGenre')
+const Joi               = require('joi');  
+const session           = require('express-session');
+const filmValidation    =  Joi.compile({
+    name            :  Joi.required(),
+    photo           :  Joi.required(),
+    description     :  Joi.required(),
+    ratings         :  Joi.required(),
+    country         :  Joi.required(),
+    genre           :  Joi.required(),
+    release_date    :  Joi.required()
+});
+
 class FilmsController {
     constructor() {
         this.model              = new ModelFilms();
@@ -43,11 +55,42 @@ class FilmsController {
         }
 
     }   
-    async create(req,res,next){
+    async addNewFilm(req,res,next){
         try{
-            console.log("HELO",req.body,req.file.filename)
+            let genre = await this.film_model.getAll();
+            res.render('create_film',{genre:genre})
         }catch(ex){
             console.log("Exception",ex)
+            res.redirect('/404');
+            
+        }
+    }
+    async create(req,res,next){
+        try{
+            let valid = Joi.validate(req.body, filmValidation);
+            if (valid.error){
+                const { details } = valid.error; 
+                const message = details.map(i => i.message).join(',');
+                return res.status(424).json(message);
+            }
+            let insertObject = {
+                name            : req.body.name,
+                description     : req.body.description,
+                ratings         : req.body.ratings,
+                country         : req.body.country,
+                release_date    : req.body.release_date,
+                photo           : req.file.filename
+            }
+            let insert = await this.model.Create(insertObject);
+            if(req.body.genre){
+                for(let film_cat  of req.body.genre){
+                    await this.film_genre_model.Create({genre_id: film_cat, film_id : insert[0]});
+                }
+            }
+            res.redirect('../films');
+        }catch(ex){
+            console.log("Exception",ex);
+            res.redirect('/404');
         }
     }
 }

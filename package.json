@@ -39,7 +39,7 @@
     "handlebars": "^4.7.7",
     "handlebars-paginate": "^0.1.0",
     "http": "0.0.1-security",
-    "joi": "^17.6.0",
+    "joi": "^14.3.1",
     "knex": "^0.21.21",
     "mkdir": "0.0.2",
     "multer": "^1.4.5-lts.1",

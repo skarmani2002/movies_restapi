@@ -84,6 +84,7 @@ const uploadPhoto = (media,option) => {
     return uploadMedia(media, {
         name: (req) => {
             try {
+                console.log("Request body,",req.body);
                 let name = req.body.name;
                 return name;
             } catch (e) {

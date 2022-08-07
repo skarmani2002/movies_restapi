@@ -3,21 +3,24 @@ const router  = express.Router();
 const FilmsController = require('../controllers/FilmsController');
 const filmsController = new FilmsController();
 const uploadPhoto = require('../middlewares/photo-upload');
-const filmValidation = require('../validations/film').default;
+const filmValidation = require('../validations/film');
 
 router.get(
     '/films',
     filmsController.getAll.bind(filmsController));
 
 router.get(
-    '/films/:film_slug',
+    '/films/film_slug',
     filmsController.getFilmBySlug.bind(filmsController));
 
-router.post(
+router.get(
     '/films/create',
-    filmValidation,
+    filmsController.addNewFilm.bind(filmsController));
+    
+    router.post(
+    '/films/create',
     uploadPhoto('photo'),
-    filmsController.create.bind(filmsController));
+   filmsController.create.bind(filmsController));
 
         
 module.exports = router;
