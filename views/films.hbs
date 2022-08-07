@@ -1,0 +1,125 @@
+{{> header}}
+<script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" /><script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  
+<div class="container">
+ <h2>Films</h2>
+<p>World biggest database of movies</p>
+
+
+ 
+<div class="card" style="width: 25rem;">
+    {{#each pagination.data}}
+
+  <img class="card-img-top" src="{{this.photo}}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{this.name}}</h5>
+    <p class="card-text">{{this.description}}</p>
+    <h6 class="card-title">Genre: {{this.genre}}</h6>
+    
+    <br>
+    <a target = "new" href="films/:{{this.name}}" class="btn btn-primary">More Detail</a>
+  </div>
+  {{/each}}
+</div>
+
+<div class="pagination pagination-centered">
+            <ul class="pagination">
+                {{#paginate pagination type="first"}}
+                    <li  class = "page-item" {{#if disabled}} class="pageNumber disabled" {{/if}}><a class="page-link" href="?p={{n}}">First</a></li>
+                {{/paginate}}
+
+                {{#paginate pagination type="previous"}}
+                    <li class = "page-item"  {{#if disabled}} class="pageNumber disabled" {{/if}}><a class="page-link" href="?p={{n}}">Prev</a></li>
+                {{/paginate}}
+                    {{#paginate pagination type="middle" limit=pagination.pageCount}}
+                    <li class = "page-item"  {{#if active}} class="pageNumber active" {{/if}}><a class="page-link" href="?p={{n}}">{{n}}</a></li>
+                {{/paginate}}
+                
+                {{#paginate pagination type="next"}}
+                    <li class = "page-item"  {{#if disabled}} class="pageNumber disabled" {{/if}}><a class="page-link" href="?p={{n}}">Next</a></li>
+                {{/paginate}}
+
+                {{#paginate pagination type="last"}}
+                    <li class = "page-item" {{#if disabled}}class="pageNumber disabled" {{/if}}><a class="page-link" href="?p={{n}}">Last</a></li>
+                {{/paginate}}
+            </ul>
+        </div>
+       
+       
+    <hr>
+    <h1> Enter a new movie</h1>
+    <form method ="POST" action="films/create" enctype="multipart/form-data" name="create_form">
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Movie Name</label>
+        <div class="col-sm-10">
+        <input type="text" class="form-control" id="name" name = "name" placeholder="Enter Movie Name">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Movie Description</label>
+        <div class="col-sm-10">
+        <textarea name="description" id="description" placeholder="Enter Movie Description"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Ratings</label>
+        <div class="col-sm-10">
+        <input type="text" class="form-control" id="ratings" name ="ratings" placeholder="Enter Rating  (0-5)">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Country</label>
+        <div class="col-sm-10">
+        <input type="text" class="form-control" id="country" name ="country" placeholder="Enter country">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="form-label select-label">Movie Genre</label>
+        <select class="form-control" id = "genre" name="genre[]" multiple="multiple">
+             {{#each genre}}
+                
+            <option value="{{this.id}}">{{this.name}}</option>
+             {{/each}}
+
+        </select>
+    </div>
+ 
+  <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Release Date</label>
+        <div class="col-sm-10">
+        <input type="text" class="form-control" id="release_date" name="release_date"  placeholder="Release Date">
+        </div>
+    </div>
+     <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Films Photo</label>
+        <div class="col-sm-10">
+        <input type="file" class="form-control" id="photo" name="photo"  placeholder="Upload photo">
+        </div>
+    </div>
+  
+  
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <button type="submit" class="btn btn-primary">Add a new Movie</button>
+    </div>
+  </div>
+</form>
+       </div>
+
+ <script>
+    $(document).ready(function() {
+        var $j = jQuery.noConflict();
+        $( "#release_date" ).datepicker();
+        $('#genre').select2();
+    });
+ </script>      
+
