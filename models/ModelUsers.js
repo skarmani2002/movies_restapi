@@ -1,16 +1,17 @@
-class ModelGenre {
+class ModelUsers {
 
     constructor() {
-        this.table = 'genre';
+        this.table = 'users';
         this.knex = global.knex;
     }
 
     async Get(where) {
-        return await this.knex(this.table).select().where(where);
+        let users =  await this.knex(this.table).select().where(where);
+        return users && users.length > 0 ? users[0] : null;
     }
 
     async Create(data) {
-        return await this.knex(this.table).returning('id').insert(data);
+        return this.knex(this.table).returning('id').insert(data);
     }
 
     Update(data, where) {
@@ -21,9 +22,9 @@ class ModelGenre {
         return this.knex(this.table).where(where).delete();
     }
     async getAll() {
-        return await this.knex(this.table).select();
+        return this.knex(this.table).select();
     }
    
    
 }
-module.exports = ModelGenre;
+module.exports = ModelUsers;

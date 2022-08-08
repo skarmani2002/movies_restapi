@@ -10,7 +10,7 @@ router.get(
     filmsController.getAll.bind(filmsController));
 
 router.get(
-    '/films/film_slug',
+    '/films/:film_slug',
     filmsController.getFilmBySlug.bind(filmsController));
 
 router.get(

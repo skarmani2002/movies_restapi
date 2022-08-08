@@ -5,12 +5,12 @@ class ModelFilmGenre {
         this.knex = global.knex;
     }
 
-    Get(where) {
-        return this.knex(this.table).select().where(where);
+    async Get(where) {
+        return await this.knex(this.table).select().where(where);
     }
 
     async Create(data) {
-        return this.knex(this.table).returning('id').insert(data);
+        return await this.knex(this.table).returning('id').insert(data);
     }
 
     Update(data, where) {

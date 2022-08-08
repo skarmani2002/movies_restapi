@@ -7,7 +7,6 @@ const ModelFilms        = require('../models/ModelFilms');
 const ModelFilmGenre    = require('../models/ModelFilmGenre');
 const ModelGenre        = require('../models/ModelGenre')
 const Joi               = require('joi');  
-const session           = require('express-session');
 const filmValidation    =  Joi.compile({
     name            :  Joi.required(),
     photo           :  Joi.required(),
@@ -24,6 +23,13 @@ class FilmsController {
         this.film_genre_model   = new ModelFilmGenre();
         this.film_model         = new ModelGenre();
        }
+     
+    /**
+    * Description : Get all Films record
+    * @param {*} req 
+    * @param {*} res 
+    * @param {*} next 
+    */
     async getAll(req,res,next){
         try{
             let filmObject = await this.model.getPaginatedRecord(req)
@@ -40,15 +46,21 @@ class FilmsController {
         }
         
     }
+    /**
+     * Description: Get fim detail by slug 
+     * @param {*} reql(film name) 
+     * @param {*} res 
+     * @param {*} next 
+     */
     async getFilmBySlug(req,res,next){
         try{
             let slug = req.params.film_slug;
+            slug = slug.replace(/[:]+/g, '');
             let filmObject = await this.model.GetBySlug(slug);
             for(let film of filmObject ){
                 film.genre = await this.film_genre_model.getFilmsGenre(film.id);
             }
             res.render('film_detail',{code:200, status:true ,data:filmObject})
-            console.log(filmObject)
         }catch(ex){
             console.log("Exception",ex)
             res.redirect('/404');

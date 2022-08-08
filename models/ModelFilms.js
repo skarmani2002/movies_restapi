@@ -6,11 +6,11 @@ class ModelFilms {
     }
 
     async Get(where) {
-        return this.knex(this.table).select().where(where);
+        return await this.knex(this.table).select().where(where);
     }
 
     async Create(data) {
-        return this.knex(this.table).returning('id').insert(data);
+        return await this.knex(this.table).returning('id').insert(data);
     }
 
     Update(data, where) {
@@ -21,7 +21,7 @@ class ModelFilms {
         return this.knex(this.table).where(where).delete();
     }
     async GetBySlug(slug) {
-        return this.knex(this.table).select()
+        return await this.knex(this.table).select()
         .where('name', 'like', `%${slug}%`);
     }
    
